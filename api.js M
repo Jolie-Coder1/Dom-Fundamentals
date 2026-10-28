@@ -1,0 +1,17 @@
+export async function fetchData(url) {
+  if (typeof url !== "string" || url.trim() === "") {
+    throw new TypeError("A valid URL is required.");
+  }
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  if (!Array.isArray(data.products)) {
+    throw new Error("The response does not contain a products array.");
+  }
+
+  return data.products;
+}
